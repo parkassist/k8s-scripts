@@ -23,6 +23,16 @@ done
 echo "Done deploying Secrets"
 echo ""
 
+echo "Deploying Services"
+for index in "${!SERVICE_FILES[@]}"
+do
+  SERVICE_FILE=${SERVICE_FILES[$index]}
+  echo "Applying ${SERVICE_FILE}"
+  kubectl apply -f ${SERVICE_FILE} --namespace=$NAMESPACE --record
+done
+echo "Done deploying Services"
+echo ""
+
 echo "Deploying Persistent Volumes"
 for index in "${!PERSISTENT_VOLUME_FILES[@]}"
 do
@@ -43,14 +53,14 @@ done
 echo "Done deploying Persistent Volume Claims"
 echo ""
 
-echo "Deploying Services"
-for index in "${!SERVICE_FILES[@]}"
+echo "Deploying StatefulSets"
+for index in "${!STATEFULSET_FILES[@]}"
 do
-  SERVICE_FILE=${SERVICE_FILES[$index]}
-  echo "Applying ${SERVICE_FILE}"
-  kubectl apply -f ${SERVICE_FILE} --namespace=$NAMESPACE --record
+  STATEFULSET_FILE=${STATEFULSET_FILES[$index]}
+  echo "Applying ${STATEFULSET_FILE}"
+  kubectl apply -f ${STATEFULSET_FILE} --namespace=$NAMESPACE --record
 done
-echo "Done deploying Services"
+echo "Done deploying StatefulSets"
 echo ""
 
 echo "Deploying Endpoints"
@@ -136,3 +146,12 @@ do
   kubectl apply -f ${HORIZONTAL_POD_AUTOSCALER_FILE} --namespace=$NAMESPACE --record
 done
 echo "Done deploying Horizontal Pod Autoscalers"
+
+echo "Deploying Pod Disruption Budgets"
+for index in "${!POD_DISRUPTION_BUDGET_FILES[@]}"
+do
+  POD_DISRUPTION_BUDGET_FILE=${POD_DISRUPTION_BUDGET_FILES[$index]}
+  echo "Applying ${POD_DISRUPTION_BUDGET_FILE}"
+  kubectl apply -f ${POD_DISRUPTION_BUDGET_FILE} --namespace=$NAMESPACE --record
+done
+echo "Done deploying Pod Disruption Budget"

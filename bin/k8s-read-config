@@ -59,6 +59,15 @@ echo "[secret_files]: ${SECRET_FILES[@]}"
 
 echo "[s3-secrets]: ${S3_SECRETS[@]}"
 
+
+echo "[sops-secrets]: ${SOPS_SECRETS[@]}"
+SOPS_SECRET_FILES=()
+for i in "${SOPS_SECRETS[@]}"
+do
+  SOPS_SECRET_FILES+=($BASEDIR/deploy/$i.secret.sops.yml)
+done
+echo "[sops_secret_files]: ${SOPS_SECRET_FILES[@]}"
+
 echo "[persistent volumes]: ${PERSISTENT_VOLUMES[@]}"
 PERSISTENT_VOLUME_FILES=()
 for i in "${PERSISTENT_VOLUMES[@]}"
@@ -74,6 +83,14 @@ do
   PERSISTENT_VOLUME_CLAIM_FILES+=($BASEDIR/deploy/$i.persistent_volume_claim.yml)
 done
 echo "[persistent_volume_claim_files]: ${PERSISTENT_VOLUME_CLAIM_FILES[@]}"
+
+echo "[statefulsets]: ${STATEFULSETS[@]}"
+STATEFULSET_FILES=()
+for i in "${STATEFULSETS[@]}"
+do
+  STATEFULSET_FILES+=($BASEDIR/deploy/$i.statefulset.yml)
+done
+echo "[statefulset_files]: ${STATEFULSET_FILES[@]}"
 
 echo "[services]: ${SERVICES[@]}"
 SERVICE_FILES=()
@@ -122,6 +139,14 @@ do
   HORIZONTAL_POD_AUTOSCALER_FILES+=($BASEDIR/deploy/$i.horizontal_pod_autoscaler.yml)
 done
 echo "[horizontal_pod_autoscaler_files]: ${HORIZONTAL_POD_AUTOSCALER_FILES[@]}"
+
+echo "[pod_disruption_budget]: ${POD_DISRUPTION_BUDGETS[@]}"
+POD_DISRUPTION_BUDGET_FILES=()
+for i in "${POD_DISRUPTION_BUDGETS[@]}"
+do
+  POD_DISRUPTION_BUDGET_FILES+=($BASEDIR/deploy/$i.pod_disruption_budget.yml)
+done
+echo "[pod_disruption_budget_files]: ${POD_DISRUPTION_BUDGET_FILES[@]}"
 
 echo "[blocking jobs]: ${BLOCKING_JOBS[@]}"
 BLOCKING_JOBS_FILES=()
